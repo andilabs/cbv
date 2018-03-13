@@ -18,9 +18,10 @@ from django.contrib import admin
 from django.urls import path
 
 
-from demo.views import ItemUpdateView
+from demo.views import ItemUpdateView, ItemListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    path(r'items/', ItemListView.as_view(), name='item-list'),
     path(r'items/<int:pk>/', ItemUpdateView.as_view(), name='item-detail')
 ]

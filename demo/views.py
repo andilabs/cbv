@@ -1,6 +1,6 @@
 from django.forms import ModelForm, CharField, Textarea
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 
 from demo.models import Item
 
@@ -30,4 +30,8 @@ class ItemUpdateView(UpdateView):
     model = Item
 
     def get_success_url(self):
-        return reverse_lazy('item-detail', kwargs={'pk': 1})
+        return reverse_lazy('item-list')
+
+
+class ItemListView(ListView):
+    model = Item
