@@ -18,7 +18,7 @@ class ItemForm(ModelForm):
         item.code.save()
 
     def get_initial_for_field(self, field, field_name):
-        if field_name == 'description':
+        if field_name == 'description' and hasattr(self.instance, 'code'):
             return self.instance.code.description
         else:
             return super(ItemForm, self).get_initial_for_field(field, field_name)
@@ -35,3 +35,13 @@ class ItemUpdateView(UpdateView):
 
 class ItemListView(ListView):
     model = Item
+
+    def get_context_data(self, **kwargs):
+        data = super(ItemListView, self).get_context_data()
+        from demo.views import ItemForm
+        from django.forms import modelformset_factory
+        IFS = modelformset_factory(Item, form=ItemForm)
+        formset = IFS()
+        data['formset'] = formset
+        data['x'] = 'Y'
+        return data
