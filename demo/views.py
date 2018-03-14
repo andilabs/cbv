@@ -1,7 +1,7 @@
+from django.forms import modelformset_factory
 from django.forms import ModelForm, CharField, Textarea
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, ListView
-
 from demo.models import Item
 
 
@@ -38,10 +38,6 @@ class ItemListView(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ItemListView, self).get_context_data()
-        from demo.views import ItemForm
-        from django.forms import modelformset_factory
-        IFS = modelformset_factory(Item, form=ItemForm)
-        formset = IFS()
+        formset = modelformset_factory(Item, form=ItemForm)()
         data['formset'] = formset
-        data['x'] = 'Y'
         return data
